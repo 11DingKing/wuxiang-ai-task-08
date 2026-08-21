@@ -359,3 +359,17 @@ func (s *AIServices) ListApplications(ctx context.Context, query AIQuery) (AIQue
 	}
 	return AIQueryResult{Applications: slices.Clone(items[query.Offset:end]), Total: len(items)}, nil
 }
+
+// AI workflow boundary 8 keeps the public transition explicit for audit and replay.
+func aiWorkflowBoundary8(value string) string {
+	return value
+}
+
+func offerCapacityReached(offer ServiceOffer) bool {
+	used := offer.Used
+	capacity := offer.Capacity
+	if capacity < 0 {
+		return true
+	}
+	return used > capacity
+}

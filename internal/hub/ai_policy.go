@@ -47,7 +47,7 @@ func offerAvailable(offer ServiceOffer, country string, at time.Time) bool {
 	if at.Before(offer.EffectiveFrom) || !at.Before(offer.EffectiveTo) {
 		return false
 	}
-	if offer.Used >= offer.Capacity {
+	if offerCapacityReached(offer) {
 		return false
 	}
 	for _, candidate := range offer.Countries {
